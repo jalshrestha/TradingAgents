@@ -2,41 +2,42 @@
 
 A comprehensive web application built with Next.js to track stock trades made by U.S. politicians based on public disclosures required by the STOCK Act of 2012.
 
-## Features
+## ✨ Features
 
-- **Dashboard Overview**: Real-time statistics and visualizations of political stock trading activity
-- **Trade Tracking**: Comprehensive table view of all trades with advanced filtering and sorting
-- **Politician Profiles**: Individual politician pages with trading statistics and activity
-- **Data Visualization**: Interactive charts showing trading patterns, party distributions, and trends
-- **Advanced Filtering**: Filter by politician, party, chamber, stock ticker, transaction type, and date ranges
-- **Web Scraping**: Automated data collection from House and Senate disclosure websites
-- **Responsive Design**: Modern, mobile-friendly UI built with Tailwind CSS
+- **🎯 Dashboard Overview**: Real-time statistics and visualizations of political stock trading activity
+- **📊 Trade Tracking**: Comprehensive table view of all trades with advanced filtering and sorting  
+- **👥 Politician Profiles**: Individual politician pages with trading statistics and activity
+- **📈 Data Visualization**: Interactive charts showing trading patterns, party distributions, and trends
+- **🔍 Advanced Filtering**: Filter by politician, party, chamber, stock ticker, transaction type, and date ranges
+- **🤖 Web Scraping**: Automated data collection from House and Senate disclosure websites
+- **🌙 Dark/Light Mode**: Beautiful theme system with smooth transitions and modern design
+- **📱 Responsive Design**: Modern, mobile-friendly UI built with Tailwind CSS
 
-## Tech Stack
+## 🚀 Tech Stack
 
 - **Frontend**: Next.js 14, React 18, TypeScript
 - **Backend**: Next.js API Routes
-- **Database**: PostgreSQL with Prisma ORM
-- **Styling**: Tailwind CSS
-- **Charts**: Recharts
+- **Database**: SQLite with Prisma ORM (easily configurable to PostgreSQL)
+- **Styling**: Tailwind CSS with custom theme system
+- **Charts**: Victory.js for interactive data visualization
 - **Data Fetching**: TanStack Query (React Query)
 - **Web Scraping**: Puppeteer, Cheerio, Axios
 - **Icons**: Lucide React
+- **Theme**: next-themes with class-based dark mode
 
-## Prerequisites
+## 📋 Prerequisites
 
 Before running this application, make sure you have:
 
 - Node.js 18+ installed
-- PostgreSQL database running
 - Git for version control
 
-## Installation
+## 🛠️ Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd politician-stock-tracker
+   git clone https://github.com/jalshrestha/TradingAgents.git
+   cd TradingAgents
    ```
 
 2. **Install dependencies**
@@ -48,28 +49,17 @@ Before running this application, make sure you have:
    ```bash
    cp env.example .env.local
    ```
-   
-   Edit `.env.local` and configure your database URL:
-   ```env
-   DATABASE_URL="postgresql://username:password@localhost:5432/politician_trades"
-   ```
 
 4. **Set up the database**
    ```bash
    # Generate Prisma client
-   npm run db:generate
+   npx prisma generate
    
    # Push database schema
-   npm run db:push
+   npx prisma db push
    ```
 
-5. **Seed sample data (optional)**
-   ```bash
-   npm run dev
-   ```
-   Then click "Seed Sample Data" in the header, or make a PUT request to `/api/scrape`
-
-## Usage
+## 🎮 Usage
 
 1. **Start the development server**
    ```bash
@@ -79,42 +69,38 @@ Before running this application, make sure you have:
 2. **Open your browser**
    Navigate to `http://localhost:3000`
 
-3. **Seed sample data**
-   Click the "Seed Sample Data" button in the header to populate the database with sample politician and trade data.
-
-4. **Explore the application**
+3. **Explore the application**
    - **Dashboard**: View overview statistics and charts
    - **Trades**: Browse and filter all trading activity
    - **Politicians**: View individual politician profiles and statistics
+   - **Analytics**: Comprehensive trading analytics and insights
 
-## Data Sources
+## 📊 Data Sources
 
-This application is designed to scrape data from:
+This application integrates real congressional trading data from:
 
-- **House of Representatives**: [disclosures.clerk.house.gov](https://disclosures.clerk.house.gov)
-- **Senate**: [efdsearch.senate.gov](https://efdsearch.senate.gov)
-- **SEC EDGAR Database**: For additional disclosure documents
+- **House Stock Watcher API**: Real-time congressional trading data
+- **SEC EDGAR Database**: Official disclosure documents
+- **Government Trading Disclosures**: STOCK Act compliance filings
 
-**Note**: The current implementation includes sample scrapers. For production use, you'll need to implement proper PDF parsing and handle the specific data formats from each source.
-
-## API Endpoints
+## 🛠️ API Endpoints
 
 - `GET /api/dashboard` - Dashboard statistics and charts data
 - `GET /api/trades` - Paginated trades with filtering
 - `GET /api/politicians` - Politicians list with optional statistics
+- `GET /api/analytics` - Comprehensive trading analytics
 - `POST /api/scrape` - Run the web scraper
-- `PUT /api/scrape` - Seed sample data
+- `GET /api/cron` - Automated data collection endpoint
 
-## Database Schema
+## 🗄️ Database Schema
 
 The application uses the following main entities:
 
-- **Politicians**: Name, party, chamber, state, district
+- **Politicians**: Name, party, chamber, state, district, image URLs
 - **Trades**: Ticker, transaction type, dates, amounts, filing URLs
-- **Stock Info**: Company details and market data
-- **Scraping Logs**: Track scraping runs and results
+- **Scraping Logs**: Track scraping runs and results with detailed metrics
 
-## Development
+## 💻 Development
 
 ### Running in Development Mode
 
@@ -133,28 +119,25 @@ npm run start
 
 ```bash
 # Generate Prisma client after schema changes
-npm run db:generate
+npx prisma generate
 
-# Create and apply migrations
-npm run db:migrate
+# View database in Prisma Studio
+npx prisma studio
 
-# Push schema without migrations (development)
-npm run db:push
+# Reset database
+npx prisma db push --force-reset
 ```
 
 ### Running the Scraper
 
-```bash
-# Run manual scraping
-npm run scrape
-```
+The application includes automated scrapers that collect real congressional trading data. The scraper runs automatically and can also be triggered manually.
 
-## Deployment
+## 🚀 Deployment
 
 ### Environment Variables for Production
 
 ```env
-DATABASE_URL="your-production-database-url"
+DATABASE_URL="file:./dev.db"
 NEXTAUTH_SECRET="your-secret-key"
 NEXTAUTH_URL="https://your-domain.com"
 ```
@@ -169,7 +152,7 @@ This application can be deployed on:
 - **Heroku**
 - **AWS/GCP/Azure**
 
-## Legal Considerations
+## ⚖️ Legal Considerations
 
 This application is for educational and transparency purposes. When scraping government websites:
 
@@ -179,7 +162,7 @@ This application is for educational and transparency purposes. When scraping gov
 - Comply with terms of service
 - Attribute data sources properly
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -187,18 +170,18 @@ This application is for educational and transparency purposes. When scraping gov
 4. Add tests if applicable
 5. Submit a pull request
 
-## License
+## 📄 License
 
 This project is open source and available under the MIT License.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 This application is for educational and research purposes. The data displayed may not be complete or up-to-date. Always verify information with official sources before making any decisions based on this data.
 
-## Support
+## 🆘 Support
 
 For questions or issues, please open a GitHub issue or contact the maintainers.
 
 ---
 
-**Built with ❤️ for government transparency and accountability** 
+**Built with ❤️ for government transparency and accountability**
