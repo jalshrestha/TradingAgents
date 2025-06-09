@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Politician {
+  id        String   @id @default(cuid())
+  name      String
+  party     String
+  chamber   String   // House or Senate
+  state     String
+  district  String?  // For House representatives
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trades Trade[]
+
+  @@unique([name, chamber])
+  @@map("politicians")
+}
+
+model Trade {
+  id               String    @id @default(cuid())
+  politicianId     String
+  politician       Politician @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+  
+  // Trade details
+  ticker           String
+  companyName      String?
+  transactionType  String    // Buy, Sell, Exchange
+  transactionDate  DateTime
+  reportedDate     DateTime
+  amount           String    // Range like "$1,001 - $15,000"
+  amountMin        Float?    // Minimum amount in dollars
+  amountMax        Float?    // Maximum amount in dollars
+  
+  // Additional details
+  assetType        String?   // Stock, Bond, etc.
+  comment          String?
+  filingUrl        String?   // Link to original filing
+  
+  // Metadata
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([ticker])
+  @@index([politicianId])
+  @@index([transactionDate])
+  @@map("trades")
+}
+
+model StockInfo {
+  id          String   @id @default(cuid())
+  ticker      String   @unique
+  companyName String
+  sector      String?
+  industry    String?
+  marketCap   Float?
+  currentPrice Float?
+  lastUpdated DateTime @default(now())
+  
+  @@map("stock_info")
+}
+
+model ScrapingLog {
+  id        String   @id @default(cuid())
+  source    String   // House, Senate, SEC
+  status    String   // Success, Failed, In Progress
+  message   String?
+  errors    String?  // Error messages from scraping attempts
+  tradesFound Int?
+  startTime DateTime @default(now())
+  endTime   DateTime?
+  
+  @@map("scraping_logs")
+} 
