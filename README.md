@@ -178,10 +178,6 @@ This project is open source and available under the MIT License.
 
 This application is for educational and research purposes. The data displayed may not be complete or up-to-date. Always verify information with official sources before making any decisions based on this data.
 
-## 🆘 Support
-
-For questions or issues, please open a GitHub issue or contact the maintainers.
-
 ---
 
-**Built with ❤️ for government transparency and accountability**
+
